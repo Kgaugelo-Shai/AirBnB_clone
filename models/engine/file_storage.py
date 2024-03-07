@@ -41,7 +41,16 @@ class FileStorage:
         # find key value pair in the file
         if os.path.exists(self.__file_path):
             with open(self.__file_path, "r") as j_file:
-                self.__objects = json.loads(j_file)
+                json_dict = json.loads(j_file)
+                self.deserialize_obj(json_dict)
 
-        #    for k, v in json.loads(j_file).items():
-        #       self.__objects[k] = v
+    def deserialize_obj(self, obj):
+        """ Deserializes JSON data into objects """
+        for k, v in json_dict.items():
+            class_name = key.split(".")[0]
+            obj_class = globals().get(class_name)
+            if obj_class is not None:
+                obj = obj_class(**v)
+                json_dict[k] = obj
+            else:
+                print(f"Class {class_name} not found.")

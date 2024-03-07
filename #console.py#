@@ -29,6 +29,20 @@ class HBNBCommand(cmd.Cmd):
     def help_quit(self):
         print("Quit command to exit the program")
 
+    def do_create(self, line):
+        """ creates a new object and saves it in JSON file"""
+        # get class from line, store it in a variable
+        # create an object suing variable
+        #save that variable
+        #print id of the new object
+        cls_obj = self.get
+
+        create BaseModel
+        cls_obj = BaseModel #after split
+        new_obj = cls_obj()
+        new_obj.save()
+        print(new_obj.id)
+
     def default(self, line):
         if len(line) ==  0:
             return
