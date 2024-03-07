@@ -3,6 +3,7 @@
 from uuid import uuid4
 from datetime import datetime, date , time
 import models
+from models.engine.file_storage import FileStorage
 
 class BaseModel:
     """Represents the BaseModel of the HBnB project."""
@@ -21,6 +22,7 @@ class BaseModel:
         self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = self.created_at
+        models.storage.new(self)
 
     def __str__(self):
         """Returns [<class name>] (<self.id>) <self.__dict__>"""
@@ -30,6 +32,7 @@ class BaseModel:
     def save(self):
         """ updates the updated_at to the current times. """
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values"""
