@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """ Defines the command line interpreter to manage AirBnB objects. """
 import cmd
+from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 # Imports cmd class
 # Entry point
 # My main function is defined here
@@ -11,6 +13,10 @@ import cmd
 class HBNBCommand(cmd.Cmd):
     """ Defines a ClientManager class that inherits from the cmd class """
     prompt = "(hbnb) "
+
+    __instances = {
+            "BaseModel": BaseModel
+        }
     def __init__(self):
         """ Initializes a ClientManager class object """
         super().__init__()
@@ -34,6 +40,26 @@ class HBNBCommand(cmd.Cmd):
             return
         print(f"Unknown command: {line}")
 
+    def do_create(self, line):
+        """ creates a new instance of BaseModel, saves it ad prints id. """
+    #create - creates a new instance of BaseModel
+    # savesit (to JSON File) and prints id
+    # Ex: create BaseModel
+    # if the class name is missing, print ** class name missing **(ex: $ create)
+    # If the class name doesn’t exist, print ** class doesn't exist **
+    # (ex: $ create MyModel)
+        if not line:
+            print("** class name missing **")
+        elif line != "BaseModel":
+            print("** class doesn't exist **")
+        else:
+            fileStorage = FileStorage()
+            baseModel = BaseModel()
+            print(baseModel.id)
+            fileStorage.new(baseModel)
+            baseModel.save()
+
+ 
 
 if __name__ == "__main__":
     """

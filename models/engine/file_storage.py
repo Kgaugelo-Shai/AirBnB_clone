@@ -7,7 +7,12 @@ import re
 import models
 
 class FileStorage:
+    """ Represents FileStorage Class
 
+    Attributes:
+        __file_path (str): A string representation of path to JSON file.
+        __objects (dict): A dictionary containing instantiated objects
+    """
     __file_path = "file.json"
     __objects = {}
 

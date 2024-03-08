@@ -9,7 +9,15 @@ class BaseModel:
     """Represents the BaseModel of the HBnB project."""
 
     def __init__(self, *args, **kwargs):
-        """Intializing a new BaseModel"""
+        """Intializing a new BaseModel
+
+        Attributes:
+            id (str): unique id string given to each object
+            created_at: datetime object with time of creation,
+                        format "%Y-%m-%dT%H:%M:%S.%f"
+            updated_at: datetime object with time object was updated
+                        format "%Y-%m-%dT%H:%M:%S.%f"
+        """
 
         if kwargs and len(kwargs) != 0:
             for k, v in kwargs.items():
