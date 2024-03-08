@@ -2,6 +2,9 @@
 """ Represents file storage in JSON"""
 import json
 import os
+#import importlib
+import re
+import models
 
 class FileStorage:
 
@@ -31,26 +34,14 @@ class FileStorage:
             json.dump(new_dict, j_file)
 
     def reload(self):
-        """ deserializes the JSON file to __objects (only if the JSON file
-        (__file_path) exists
-        """
-        # check if file exists, if does not pass
-        # otherwise, we deserialize
-        # open file, read file
-        # loop through the whole file
-        # find key value pair in the file
+        """Deserializes the JSON file to __objects"""
         if os.path.exists(self.__file_path):
-            with open(self.__file_path, "r") as j_file:
-                json_dict = json.loads(j_file)
-                self.deserialize_obj(json_dict)
-
-    def deserialize_obj(self, obj):
-        """ Deserializes JSON data into objects """
-        for k, v in json_dict.items():
-            class_name = key.split(".")[0]
-            obj_class = globals().get(class_name)
-            if obj_class is not None:
-                obj = obj_class(**v)
-                json_dict[k] = obj
-            else:
-                print(f"Class {class_name} not found.")
+            with open(self.__file_path, 'r') as j_file:
+                obj_data = json.load(j_file)
+                for k, v in obj_data.items():
+                    class_name = k.split('.')[0]
+                    module = __import__('models.base_model',
+                                        fromlist=[class_name])
+                    instance = getattr(module, class_name)
+                    obj = instance(**v)
+                    self.new(obj)
