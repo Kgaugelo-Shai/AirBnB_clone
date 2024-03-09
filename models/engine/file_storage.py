@@ -50,5 +50,3 @@ class FileStorage:
                     instance = getattr(module, class_name)
                     obj = instance(**v)
                     self.new(obj)
-
-   

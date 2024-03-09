@@ -25,12 +25,14 @@ class BaseModel:
                     continue
                 elif k in ["created_at", "updated_at"]:
                     v = datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%f")
+                    setattr(self, k, v)
                 else:
                     setattr(self, k, v)
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = self.created_at
-        models.storage.new(self)
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = self.created_at
+            models.storage.new(self)
 
     def __str__(self):
         """Returns [<class name>] (<self.id>) <self.__dict__>"""
