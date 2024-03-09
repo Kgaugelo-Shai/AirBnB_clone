@@ -40,6 +40,10 @@ class HBNBCommand(cmd.Cmd):
             return
         print(f"Unknown command: {line}")
 
+    def emptyline(self):
+        """does nothing upon recieving an empty command."""
+        pass
+
     def do_create(self, line):
         """ creates a new instance of BaseModel, saves it ad prints id. """
         #create - creates a new instance of BaseModel
@@ -108,8 +112,8 @@ class HBNBCommand(cmd.Cmd):
         fileStorage = FileStorage()
         fileStorage.reload()
         obj_dict = fileStorage.all()
-
         args = line.split()
+
         if not line:
             print("** class name missing **")
         elif args[0] not in HBNBCommand.__instances:
@@ -124,6 +128,26 @@ class HBNBCommand(cmd.Cmd):
             else:
                 del obj_dict[k]
                 fileStorage.save()
+    
+    def do_update(self,line):
+        """Updates an instance based on the class name and id
+           by adding or updating attribute save the JSON file.
+           Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com".
+        """
+        fileStorage = FileStorage()
+        fileStorage.reload()
+        instance = fileStorage.all()
+        args = line.split()
+
+        if not line:
+            print("** class name missing **")
+        elif args[0] not in HBNBCommand.__instances:
+            print("** class doesn't exist **")
+        elif len(args) < 2:
+            print("** instance id missing **")
+        
+
+
 
 if __name__ == "__main__":
     """
