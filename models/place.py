@@ -6,6 +6,14 @@ import User
 import Amenity
 
 class Place(BaseModel):
+    """Represent a place.
+
+    Attributes:
+            city_id: The City id.
+            user_id: The User id.
+            Name: The name of the place.
+            description:The description of the place.
+    """
 
     city_id: str = ""
     user_id: str = ""
