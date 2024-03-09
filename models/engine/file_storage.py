@@ -44,9 +44,11 @@ class FileStorage:
             with open(self.__file_path, 'r') as j_file:
                 obj_data = json.load(j_file)
                 for k, v in obj_data.items():
-                    class_name = k.split('.')[0]
+                    class_name = k.split(".")[0]
                     module = __import__('models.base_model',
                                         fromlist=[class_name])
                     instance = getattr(module, class_name)
                     obj = instance(**v)
                     self.new(obj)
+
+   

@@ -42,25 +42,41 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         """ creates a new instance of BaseModel, saves it ad prints id. """
-    #create - creates a new instance of BaseModel
-    # savesit (to JSON File) and prints id
-    # Ex: create BaseModel
-    # if the class name is missing, print ** class name missing **(ex: $ create)
-    # If the class name doesn’t exist, print ** class doesn't exist **
-    # (ex: $ create MyModel)
+        #create - creates a new instance of BaseModel
+        # savesit (to JSON File) and prints id
+        # Ex: create BaseModel
+        # if the class name is missing, print ** class name missing **(ex: $ create)
+        # If the class name doesn’t exist, print ** class doesn't exist **
+        # (ex: $ create MyModel)
         if not line:
             print("** class name missing **")
-        elif line != "BaseModel":
+        elif line not in HBNBCommand.__instances:
             print("** class doesn't exist **")
         else:
+            instance = HBNBCommand.__instances[line]()
+            instance.save()
+            print(instance.id)
+
+    def do_show(self, line):
+        """ Prints the string representation of an instance based on the
+            class name Ex: $ show BaseModel 1234-1234-1234
+        """
+        args = line.split()
+        if not line:
+            print("** class name missing **")
+        elif args[0] not in HBNBCommand.__instances:
+            print("** class doesn't exist **")
+        elif len(args) < 2:
+            print("** instance id missing **")
+        else:
             fileStorage = FileStorage()
-            baseModel = BaseModel()
-            print(baseModel.id)
-            fileStorage.new(baseModel)
-            baseModel.save()
+            instance = fileStorage.all().get(f"{args[0]}.{args[1]}")
+            if instance:
+                print(instance)
+            else:
+                print("** no instance found **")
 
  
-
 if __name__ == "__main__":
     """
     Creates a ClientManager object and parses the object to a cmdloop method
