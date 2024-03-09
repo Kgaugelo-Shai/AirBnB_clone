@@ -105,6 +105,10 @@ class HBNBCommand(cmd.Cmd):
             save the change to JSON file.
             Ex: $ destroy BaseModel 1234-1234-1234
         """
+        fileStorage = FileStorage()
+        fileStorage.reload()
+        obj_dict = fileStorage.all()
+
         args = line.split()
         if not line:
             print("** class name missing **")
@@ -113,7 +117,13 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) < 2:
             print("** instance id missing **")
         else:
-            fileStorage = FileStorage()
+            k = "{}.{}".format(args[0],args[1])
+
+            if k not in obj_dict:
+                print("**no instance found**")
+            else:
+                del obj_dict[k]
+                fileStorage.save()
 
 if __name__ == "__main__":
     """
