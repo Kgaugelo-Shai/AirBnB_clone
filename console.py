@@ -121,9 +121,9 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) < 2:
             print("** instance id missing **")
         else:
-            k = "{}.{}".format(args[0],args[1])
+            k = "{}.{}".format(args[0], args[1])
 
-            if k not in obj_dict:
+            if k not in obj_dict.keys():
                 print("**no instance found**")
             else:
                 del obj_dict[k]
@@ -134,9 +134,6 @@ class HBNBCommand(cmd.Cmd):
            by adding or updating attribute save the JSON file.
            Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com".
         """
-        fileStorage = FileStorage()
-        fileStorage.reload()
-        instance = fileStorage.all()
         args = line.split()
 
         if not line:
@@ -145,9 +142,23 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
-        
+        elif len(args) < 3:
+            print("** attribute name missing **")
+        elif len(args) < 4:
+            print("** value missing **")
+        else:
+            fileStorage = FileStorage()
+            fileStorage.reload()
+            dict_instance = fileStorage.all()
+            
+            k = "{}.{}".format(args[0], args[1])
+            if k not in dict_instance.keys():
+                print("**no instance found**")
+            else:
+                instance = dict_instance[k]
 
-
+                setattr(instance, args[2], args[3].strip('"'))
+                instance.save()
 
 if __name__ == "__main__":
     """
