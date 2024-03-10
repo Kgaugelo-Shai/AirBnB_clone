@@ -11,13 +11,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
-# Imports cmd class
-# Entry point
-# My main function is defined here
-# create class that inherits from cmd class
-# Define __init__ class that inherits the parent class __init__ method
-# and define an empty dictionary
-# set prompt to "(hbnb) "
+
 class HBNBCommand(cmd.Cmd):
     """ Defines a ClientManager class that inherits from the cmd class
 
@@ -37,16 +31,16 @@ class HBNBCommand(cmd.Cmd):
             "Review": Review
         }
 
-#    def preloop(self):
-#        """ Listens for isatty, and prints prompt it if it is false """
-#        if not sys.__stdin__.isatty():
-#            print('(hbnb) ')
+    def preloop(self):
+        """ Listens for isatty, and prints prompt it if it is false """
+        if not sys.__stdin__.isatty():
+            print('(hbnb) ')
 
-#    def postcmd(self, stop, line):
-#        """ if isatty is false, prints the prompt """
-#        if not sys.__stdin__.isatty():
-#            print('(hbnb) ')
-#        return stop
+    def postcmd(self, stop, line):
+        """ if isatty is false, prints the prompt """
+        if not sys.__stdin__.isatty():
+            print('(hbnb) ')
+        return stop
 
     def do_EOF(self, line):
         print()
@@ -62,7 +56,7 @@ class HBNBCommand(cmd.Cmd):
         print("Quit command to exit the program")
 
     def default(self, line):
-        if len(line) ==  0:
+        if len(line) == 0:
             return
         print(f"Unknown command: {line}")
 
@@ -72,12 +66,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ creates a new instance of BaseModel, saves it ad prints id. """
-        #create - creates a new instance of BaseModel
-        # savesit (to JSON File) and prints id
-        # Ex: create BaseModel
-        # if the class name is missing, print ** class name missing **(ex: $ create)
-        # If the class name doesn’t exist, print ** class doesn't exist **
-        # (ex: $ create MyModel)
         line = args.split()[0]
         if not line:
             print("** class name missing **")
@@ -109,8 +97,8 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, line):
-        """Prints all string representation of all instances based or not on the
-           class name. Ex: $ all BaseModel or $ all
+        """Prints all string representation of all instances based
+           or not on the class name. Ex: $ all BaseModel or $ all
         """
         # reload our file, save it to a dict object
         # iterate through the dictionary object
@@ -122,12 +110,10 @@ class HBNBCommand(cmd.Cmd):
         # return dict representation of all our instances
         dict_instance = fileStorage.all()
         if not line:
-            print([str(v) for k,v in dict_instance.items()])
+            print([str(v) for k, v in dict_instance.items()])
         elif line:
-            #loop through the keys dict_instance
-            # if key == line, print value
-            print([str(v) for k,v in dict_instance.items()
-                           if line == k.split(".")[0]])
+            print([str(v) for k, v in dict_instance.items()
+                   if line == k.split(".")[0]])
         else:
             print("** class doesn't exist **")
 
@@ -156,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
                 del obj_dict[k]
                 fileStorage.save()
 
-    def do_update(self,line):
+    def do_update(self, line):
         """Updates an instance based on the class name and id
            by adding or updating attribute save the JSON file.
            Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com".
@@ -186,6 +172,7 @@ class HBNBCommand(cmd.Cmd):
 
                 setattr(instance, args[2], args[3].strip('"'))
                 instance.save()
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

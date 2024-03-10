@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 
 from uuid import uuid4
-from datetime import datetime, date , time
+from datetime import datetime, date, time
 import models
+
 
 class BaseModel:
     """Represents the BaseModel of the HBnB project."""
@@ -50,13 +51,3 @@ class BaseModel:
         data_dict['created_at'] = self.created_at.isoformat()
         data_dict['updated_at'] = self.updated_at.isoformat()
         return data_dict
-
-    #update __init__(self, *args, **kwargs)
-    # if kwargs is not empty:
-    # each key of this dictionary is an attribute name
-    # each value of this dictionary is the value of this attribute name
-    # created_at and updated_at are strings in this dictionary,
-    # but inside your BaseModel instance is working with datetime object.
-    # You have to convert these strings into datetime object.
-    # Tip: you know the string format of these datetime
-    # create id and created_at as you did previously (new instance)

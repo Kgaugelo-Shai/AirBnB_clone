@@ -10,6 +10,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
+
 class FileStorage:
     """ Represents FileStorage Class
 
@@ -36,7 +37,7 @@ class FileStorage:
         # opened a file
         # dumped the new_dict to file
         new_dict = {}
-        for k,v in FileStorage.__objects.items():
+        for k, v in FileStorage.__objects.items():
             new_dict[k] = v.to_dict()
 
         with open(FileStorage.__file_path, "w") as j_file:
@@ -44,7 +45,8 @@ class FileStorage:
 
     def reload(self):
         """Deserializes the JSON file to __objects"""
-        if os.path.exists(FileStorage.__file_path):
+        if (os.path.exists(FileStorage.__file_path)
+            and os.path.getsize(self.__file_path) > 0):
             with open(FileStorage.__file_path, 'r') as j_file:
                 obj_data = json.load(j_file)
                 for value in obj_data.values():

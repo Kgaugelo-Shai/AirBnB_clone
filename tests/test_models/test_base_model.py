@@ -51,7 +51,7 @@ class TestBaseModel(unittest.TestCase):
         """ checks if save updates updated_at """
         date_obj = self.base_test.updated_at
         self.base_test.save()
-        self(assertIsInstance(date_obj, datetime))
+        self.assertIsInstance(date_obj, datetime)
 
     def test_datetime_isoformat_in_to_dict(self):
         """checks if to_dict stores dates in isoformat"""
