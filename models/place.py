@@ -1,9 +1,7 @@
 #!/usr/bin/python3
+""" Represents a Place class """
+from models.base_model import BaseModel
 
-import BaseModel
-import City
-import User
-import Amenity
 
 class Place(BaseModel):
     """Represent a place.

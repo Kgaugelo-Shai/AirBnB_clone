@@ -1,8 +1,16 @@
 #!/usr/bin/python3
 """ Defines the command line interpreter to manage AirBnB objects. """
 import cmd
+import sys
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
+from models.user import User
+from models.city import City
+from models.state import State
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+
 # Imports cmd class
 # Entry point
 # My main function is defined here
@@ -11,16 +19,34 @@ from models.engine.file_storage import FileStorage
 # and define an empty dictionary
 # set prompt to "(hbnb) "
 class HBNBCommand(cmd.Cmd):
-    """ Defines a ClientManager class that inherits from the cmd class """
+    """ Defines a ClientManager class that inherits from the cmd class
+
+        Attributes:
+            prompt (str): overrides cmd default prompt
+            __instances {}: dictionary containing instances of all classes
+    """
     prompt = "(hbnb) "
 
     __instances = {
-            "BaseModel": BaseModel
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Place": Place,
+            "Amenity": Amenity,
+            "Review": Review
         }
-    def __init__(self):
-        """ Initializes a ClientManager class object """
-        super().__init__()
-        self.client = {} # dictionary to store clients.
+
+#    def preloop(self):
+#        """ Listens for isatty, and prints prompt it if it is false """
+#        if not sys.__stdin__.isatty():
+#            print('(hbnb) ')
+
+#    def postcmd(self, stop, line):
+#        """ if isatty is false, prints the prompt """
+#        if not sys.__stdin__.isatty():
+#            print('(hbnb) ')
+#        return stop
 
     def do_EOF(self, line):
         print()
@@ -44,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
         """does nothing upon recieving an empty command."""
         pass
 
-    def do_create(self, line):
+    def do_create(self, args):
         """ creates a new instance of BaseModel, saves it ad prints id. """
         #create - creates a new instance of BaseModel
         # savesit (to JSON File) and prints id
@@ -52,6 +78,7 @@ class HBNBCommand(cmd.Cmd):
         # if the class name is missing, print ** class name missing **(ex: $ create)
         # If the class name doesn’t exist, print ** class doesn't exist **
         # (ex: $ create MyModel)
+        line = args.split()[0]
         if not line:
             print("** class name missing **")
         elif line not in HBNBCommand.__instances:
@@ -128,7 +155,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 del obj_dict[k]
                 fileStorage.save()
-    
+
     def do_update(self,line):
         """Updates an instance based on the class name and id
            by adding or updating attribute save the JSON file.
@@ -150,7 +177,7 @@ class HBNBCommand(cmd.Cmd):
             fileStorage = FileStorage()
             fileStorage.reload()
             dict_instance = fileStorage.all()
-            
+
             k = "{}.{}".format(args[0], args[1])
             if k not in dict_instance.keys():
                 print("**no instance found**")
@@ -161,7 +188,4 @@ class HBNBCommand(cmd.Cmd):
                 instance.save()
 
 if __name__ == "__main__":
-    """
-    Creates a ClientManager object and parses the object to a cmdloop method
-    """
     HBNBCommand().cmdloop()

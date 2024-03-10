@@ -3,7 +3,6 @@
 from uuid import uuid4
 from datetime import datetime, date , time
 import models
-from models.engine.file_storage import FileStorage
 
 class BaseModel:
     """Represents the BaseModel of the HBnB project."""

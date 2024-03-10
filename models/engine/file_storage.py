@@ -2,9 +2,13 @@
 """ Represents file storage in JSON"""
 import json
 import os
-#import importlib
-import re
-import models
+from models.base_model import BaseModel
+from models.user import User
+from models.city import City
+from models.state import State
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 class FileStorage:
     """ Represents FileStorage Class
@@ -32,21 +36,19 @@ class FileStorage:
         # opened a file
         # dumped the new_dict to file
         new_dict = {}
-        for k,v in self.__objects.items():
+        for k,v in FileStorage.__objects.items():
             new_dict[k] = v.to_dict()
 
-        with open(self.__file_path, "w") as j_file:
+        with open(FileStorage.__file_path, "w") as j_file:
             json.dump(new_dict, j_file)
 
     def reload(self):
         """Deserializes the JSON file to __objects"""
-        if os.path.exists(self.__file_path):
-            with open(self.__file_path, 'r') as j_file:
+        if os.path.exists(FileStorage.__file_path):
+            with open(FileStorage.__file_path, 'r') as j_file:
                 obj_data = json.load(j_file)
-                for k, v in obj_data.items():
-                    class_name = k.split(".")[0]
-                    module = __import__('models.base_model',
-                                        fromlist=[class_name])
-                    instance = getattr(module, class_name)
-                    obj = instance(**v)
+                for value in obj_data.values():
+                    class_name = value["__class__"]
+                    del value["__class__"]
+                    obj = eval(class_name)(**value)
                     self.new(obj)

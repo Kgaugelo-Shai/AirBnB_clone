@@ -1,6 +1,7 @@
-#!/usr/bin/python3 
+#!/usr/bin/python3
+""" Represents a State class"""
+from models.base_model import BaseModel
 
-import BaseModel
 
 class State(BaseModel):
     """Represents a state.
