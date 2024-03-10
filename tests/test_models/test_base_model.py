@@ -39,12 +39,11 @@ class TestBaseModel(unittest.TestCase):
     def test_to_dict(self):
         """ checks if the dictionary key-value pairs are valid"""
         dict_obj = self.base_test.to_dict()
-        #checks if created_at and updated at are datetime instances
         self.assertIsInstance(datetime.fromisoformat(dict_obj['created_at']),
                               datetime)
         self.assertIsInstance(datetime.fromisoformat(dict_obj['updated_at']),
                               datetime)
-        #checks if __class__ is of type BaseModel
+
         self.assertEqual(dict_obj['__class__'], 'BaseModel')
 
     def test_save(self):

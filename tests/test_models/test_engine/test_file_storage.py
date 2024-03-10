@@ -29,7 +29,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(all_instances, self.fileStorage._FileStorage__objects)
 
     def test_new(self):
-        """Tests if obj.__class__.__name__}.{obj.id} key is added to obj dict"""
+        """Tests obj.__class__.__name__}.{obj.id} key is added to obj dict"""
         obj = BaseModel()
         self.fileStorage.new(obj)
         key = (f"{obj.__class__.__name__}.{obj.id}")
