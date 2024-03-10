@@ -16,4 +16,8 @@ class TestBaseModel(unittest.TestCase):
         """ Tests the id, created_at and updated at attributes """
         list_attr = ["id", "created_at", "updated_at"]
         for attr in list_attr:
-            self.assertTrue(hasattr(self.test_obj, attrib))`
+            self.assertTrue(hasattr(self.test_obj, attrib))
+
+    def test_attributes_(self):
+        """Tests whether 
+
