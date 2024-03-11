@@ -137,7 +137,7 @@ class HBNBCommand(cmd.Cmd):
             k = "{}.{}".format(args[0], args[1])
 
             if k not in obj_dict.keys():
-                print("**no instance found**")
+                print("** no instance found **")
             else:
                 del obj_dict[k]
                 fileStorage.save()
@@ -166,7 +166,7 @@ class HBNBCommand(cmd.Cmd):
 
             k = "{}.{}".format(args[0], args[1])
             if k not in dict_instance.keys():
-                print("**no instance found**")
+                print("** no instance found **")
             else:
                 instance = dict_instance[k]
 
